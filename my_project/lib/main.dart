@@ -1,168 +1,47 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:my_project/screens/getting_started_screen.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-/// The app's themes.
-/// This class is just there to connect readable names
-/// to integer theme IDs.
-class AppThemes {
-  static const int LightBlue = 0;
-  static const int LightRed = 1;
-  static const int DarkBlue = 2;
-  static const int DarkRed = 3;
-
-  static String toStr(int themeId) {
-    switch (themeId) {
-      case LightBlue:
-        return "Light Blue";
-      case LightRed:
-        return "Light Red";
-      case DarkBlue:
-        return "Dark Blue";
-      case DarkRed:
-        return "Dark Red";
-      default:
-        return "Unknown";
-    }
-  }
-}
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final dark = ThemeData.dark();
-    final darkButtonTheme =
-        dark.buttonTheme.copyWith(buttonColor: Colors.grey[700]);
-    final darkFABTheme = dark.floatingActionButtonTheme;
-
-    final themeCollection = ThemeCollection(themes: {
-      AppThemes.LightBlue: ThemeData(primarySwatch: Colors.blue),
-      AppThemes.LightRed: ThemeData(primarySwatch: Colors.red),
-      AppThemes.DarkBlue: dark.copyWith(
-          accentColor: Colors.blue,
-          buttonTheme: darkButtonTheme,
-          floatingActionButtonTheme:
-              darkFABTheme.copyWith(backgroundColor: Colors.blue)),
-      AppThemes.DarkRed: ThemeData.from(
-          colorScheme:
-              ColorScheme.dark(primary: Colors.red, secondary: Colors.red)),
-    });
-
-    return DynamicTheme(
-        themeCollection: themeCollection,
-        defaultThemeId: AppThemes.LightBlue,
-        builder: (context, theme) {
-          return MaterialApp(
-            title: 'dynamic_themes example',
-            theme: theme,
-            home: HomePage(title: 'dynamic_themes example app'),
-          );
-        });
-  }
-}
-
-class HomePage extends StatefulWidget {
-  final String title;
-
-  const HomePage({Key? key, required this.title}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int dropdownValue = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    dropdownValue = DynamicTheme.of(context)!.themeId;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-          child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 24, bottom: 12),
-            child: Text('Select your theme here:'),
+    return MaterialApp(
+        theme: ThemeData(
+            primaryColor: Colors.deepPurple,
+            accentColor: Colors.deepPurpleAccent),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Flutter Demo",
+            ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+              ),
+              // IconButton(
+              //   onPressed: () {},
+              //   icon: Icon(Icons.search),
+              // ),
+              PopupMenuButton(
+                  icon: Icon(Icons.public),
+                  itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Text("EN"),
+                          value: 1,
+                        ),
+                        PopupMenuItem(
+                          child: Text("TR"),
+                          value: 2,
+                        )
+                      ]),
+            ],
           ),
-          DropdownButton(
-              icon: Icon(Icons.arrow_downward),
-              value: dropdownValue,
-              items: [
-                DropdownMenuItem(
-                  value: AppThemes.LightBlue,
-                  child: Text(AppThemes.toStr(AppThemes.LightBlue)),
-                ),
-                DropdownMenuItem(
-                  value: AppThemes.LightRed,
-                  child: Text(AppThemes.toStr(AppThemes.LightRed)),
-                ),
-                DropdownMenuItem(
-                  value: AppThemes.DarkBlue,
-                  child: Text(AppThemes.toStr(AppThemes.DarkBlue)),
-                ),
-                DropdownMenuItem(
-                  value: AppThemes.DarkRed,
-                  child: Text(AppThemes.toStr(AppThemes.DarkRed)),
-                )
-              ],
-              onChanged: (dynamic themeId) async {
-                await DynamicTheme.of(context)!.setTheme(themeId);
-                setState(() {
-                  dropdownValue = themeId;
-                });
-              }),
-          Container(
-              margin: EdgeInsets.all(20),
-              width: 100,
-              height: 100,
-              color: theme.primaryColor,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                      'Container in primary color and primary text theme',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.bodyText2),
-                ),
-              )),
-          Container(
-            margin: EdgeInsets.all(20),
-            width: 100,
-            height: 100,
-            color: theme.accentColor,
-            child: Center(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  'Container in accent color and with accent text theme',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).accentTextTheme.bodyText2),
-            )),
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text('Elevated Button'),
-          ),
-        ],
-      )),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notifications"),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ),
-    );
+          body: GettingStartedScreen(),
+        ));
   }
 }
