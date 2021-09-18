@@ -1,0 +1,11 @@
+{
+    "main": {
+        "title": "Flutter Örnek Çalışma"
+    },
+
+    "started": {
+        "buttontitle": "Başla",
+        "hasaccount": "Bir Hesabın Var Mı?",
+        "login" : "Giriş Yap"
+    }
+}

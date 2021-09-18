@@ -1,0 +1,11 @@
+{
+    "main": {
+        "title": "Flutter Demo"
+    },
+
+    "started": {
+        "buttontitle": "Getting Started",
+        "hasaccount": "Have an account?",
+        "login" : "Login"
+    }
+}

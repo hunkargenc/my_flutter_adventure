@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:my_project/extensions/locale_keys.dart';
 
 import '../widgets/slide_item.dart';
 import '../model/slide.dart';
 import '../widgets/slide_dots.dart';
 // import '../screens/login_screen.dart';
 // import '../screens/signup_screen.dart';
+
+import 'package:easy_localization/easy_localization.dart';
 
 class GettingStartedScreen extends StatefulWidget {
   @override
@@ -100,7 +103,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                       onPrimary: Colors.white, // foreground
                     ),
                     child: Text(
-                      'Getting Started',
+                      LocaleKeys.getting_started_screen_buttontitle.tr(),
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -120,7 +123,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Have an account?',
+                        LocaleKeys.getting_started_screen_hasaccount.tr(),
                         style: TextStyle(
                           fontSize: 18,
                         ),
